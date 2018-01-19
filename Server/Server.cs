@@ -22,20 +22,24 @@ namespace Server
         public void Run()
         {
             AcceptClient();
+      
             string message = client.Recieve();
             Respond(message);
         }
         private void AcceptClient()
         {
+
             TcpClient clientSocket = default(TcpClient);
             clientSocket = server.AcceptTcpClient();
             Console.WriteLine("Connected");
             NetworkStream stream = clientSocket.GetStream();
             client = new Client(stream, clientSocket);
+
         }
         private void Respond(string body)
         {
              client.Send(body);
         }
+
     }
 }
