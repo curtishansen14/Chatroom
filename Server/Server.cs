@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    class Server
+     class Server
     {
         public static Client client;
         TcpListener server;
@@ -39,6 +39,5 @@ namespace Server
         {
              client.Send(body);
         }
-
     }
 }

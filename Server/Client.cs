@@ -4,13 +4,15 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Server
 {
-    class Client
+    class Client : IFileLogger
     {
         NetworkStream stream;
         TcpClient client;
+
         public string UserId;
         public Client(NetworkStream Stream, TcpClient Client)
         {
@@ -22,6 +24,8 @@ namespace Server
         {
             byte[] message = Encoding.ASCII.GetBytes(Message);
             stream.Write(message, 0, message.Count());
+            LogMessage(Message);
+            Console.WriteLine("Message logged!");
         }
         public string Recieve()
         {
@@ -30,6 +34,14 @@ namespace Server
             string recievedMessageString = Encoding.ASCII.GetString(recievedMessage);
             Console.WriteLine(recievedMessageString);
             return recievedMessageString;
+        }
+
+        public void LogMessage(string message)
+        {
+            StreamWriter logFile;
+            logFile = new StreamWriter("ChatRoomLog.txt");
+            logFile.WriteLine(message);
+            logFile.Close();
         }
 
     }
