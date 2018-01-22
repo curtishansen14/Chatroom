@@ -12,7 +12,7 @@ namespace Server
     {
         NetworkStream stream;
         TcpClient client;
-        StreamWriter logFile = new StreamWriter("ChatRoomLog.txt");
+        
 
         public string UserId;
         public Client(NetworkStream Stream, TcpClient Client)
@@ -39,6 +39,7 @@ namespace Server
 
         public void LogMessage(string message)
         {
+            StreamWriter logFile = new StreamWriter("ChatRoomLog.txt", append: true);
             logFile.WriteLine(message);
             logFile.Close();
         }

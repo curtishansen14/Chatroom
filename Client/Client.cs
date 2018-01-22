@@ -12,7 +12,8 @@ namespace Client
     {
         TcpClient clientSocket;
         NetworkStream stream;
-        public Client(string IP, int port)
+
+        public Client(string IP, int port, string name)
         {
             clientSocket = new TcpClient();
             clientSocket.Connect(IPAddress.Parse(IP), port);
