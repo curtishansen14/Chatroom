@@ -8,17 +8,36 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    class Client
+    public class Client
     {
         TcpClient clientSocket;
         NetworkStream stream;
+        private string userName;
 
-        public Client(string IP, int port, string name)
+        public string GetUserName()
+        {
+            Console.WriteLine("Enter a name: ");
+            userName =  Console.ReadLine();
+            return userName;
+        }
+
+        public Client(string IP, int port)
         {
             clientSocket = new TcpClient();
             clientSocket.Connect(IPAddress.Parse(IP), port);
             stream = clientSocket.GetStream();
+            GetUserName();
+            Console.WriteLine(UserName + " is Connected");
         }
+
+        public string UserName
+        {
+            get
+            {
+                return userName;
+            }
+        }
+       
         public void Send()
         {
             string messageString = UI.GetInput();

@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="IFileLogger.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Message.cs" />
