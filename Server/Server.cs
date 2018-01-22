@@ -22,7 +22,6 @@ namespace Server
         public void Run()
         {
             AcceptClient();
-      
             string message = client.Recieve();
             Respond(message);
         }
