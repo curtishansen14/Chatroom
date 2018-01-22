@@ -8,6 +8,6 @@ namespace Server
 {
     public interface IFileLogger : ILogger
     {
-        
+        //Implement 
     }
 }
