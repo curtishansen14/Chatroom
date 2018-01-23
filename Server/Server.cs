@@ -16,10 +16,12 @@ namespace Server
         User client;
         TcpListener server;
         Dictionary<int, User> userList;
+        Queue<string> Queue;
         FileLogger logger;
 
         public Server()
         {
+            Queue = new Queue<string>();
             userList = new Dictionary<int, User>();
             server = new TcpListener(IPAddress.Parse("127.0.0.1"), 9999);
             server.Start();
@@ -47,11 +49,21 @@ namespace Server
 
         private void ServerResponds(User client)
         {
-           while (true)
-           {
-              string message = client.Recieve();
-              Respond(message);
+            while (true)
+            {
+                string message = client.Recieve();
+                lock (message)
+                {
+                    Queue.Enqueue(message);
+                }
+                if (Queue.Count > 0)
+                {
+                   Respond(message);
+                   Queue.Dequeue();
+                }
+                
             }
+
         }
 
         private void AddUsersToDictionary(User client)

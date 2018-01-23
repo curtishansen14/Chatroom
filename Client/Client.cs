@@ -14,13 +14,13 @@ namespace Client
         NetworkStream stream;
         private string userName;
 
+
         public string GetUserName()
         {
             Console.WriteLine("Enter a name: ");
-            userName =  Console.ReadLine();
+            userName = Console.ReadLine();
             return userName;
         }
-
         public Client(string IP, int port)
         {
             clientSocket = new TcpClient();
