@@ -13,7 +13,7 @@ namespace Client
             Console.WriteLine(message);
         }
         public static string GetInput()
-        {
+        { 
             return Console.ReadLine();
         }
     }

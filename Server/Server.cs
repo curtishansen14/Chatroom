@@ -12,8 +12,8 @@ namespace Server
 {
      class Server
     {
-        public static User client;
-        private int userNumber;
+        private int userNumber = 1;
+        User client;
         TcpListener server;
         Dictionary<User, int> userList;
 
@@ -25,6 +25,7 @@ namespace Server
         public void Run()
         {
             AcceptClient();
+            AddUsersToDictionary();
             while (true)
             {
                 string message = client.Recieve();
@@ -34,14 +35,18 @@ namespace Server
         }
         private void AcceptClient()
         {
-                userNumber = 1;
-                TcpClient clientSocket = default(TcpClient);
-                clientSocket = server.AcceptTcpClient();
-                NetworkStream stream = clientSocket.GetStream();
-                client = new User(stream, clientSocket);
-                userList = new Dictionary<User, int>();
-                userList.Add(client, userNumber);
-                userNumber++;
+               
+            TcpClient clientSocket = default(TcpClient);
+            clientSocket = server.AcceptTcpClient();
+            NetworkStream stream = clientSocket.GetStream();
+            client = new User(stream, clientSocket);  
+        }
+
+        private void AddUsersToDictionary()
+        {
+            userList = new Dictionary<User, int>();
+            userList.Add(client, userNumber);
+            userNumber++;
         }
 
         private void Respond(string body)
