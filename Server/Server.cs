@@ -16,6 +16,7 @@ namespace Server
         User client;
         TcpListener server;
         Dictionary<User, int> userList;
+        FileLogger logger;
 
         public Server()
         {
@@ -34,7 +35,7 @@ namespace Server
                 TcpClient clientSocket = default(TcpClient);
                 clientSocket = server.AcceptTcpClient();
                 NetworkStream stream = clientSocket.GetStream();
-                client = new User(stream, clientSocket);
+                client = new User(stream, clientSocket, logger);
                 AddUsersToDictionary(client);
                 Task chat = Task.Run(() =>
                 {
