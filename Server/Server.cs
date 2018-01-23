@@ -25,28 +25,39 @@ namespace Server
         public void Run()
         {
             AcceptClient();
-            AddUsersToDictionary();
-            while (true)
-            {
-                string message = client.Recieve();
-                Respond(message);
-
-            }
+        
         }
         private void AcceptClient()
         {
-               
-            TcpClient clientSocket = default(TcpClient);
-            clientSocket = server.AcceptTcpClient();
-            NetworkStream stream = clientSocket.GetStream();
-            client = new User(stream, clientSocket);  
+            while (true)
+            {
+                TcpClient clientSocket = default(TcpClient);
+                clientSocket = server.AcceptTcpClient();
+                NetworkStream stream = clientSocket.GetStream();
+                client = new User(stream, clientSocket);
+                AddUsersToDictionary(client);
+                Task chat = Task.Run(() =>
+                {
+                    StartChatting(client);
+                });
+            } 
         }
 
-        private void AddUsersToDictionary()
+        private void StartChatting(User client)
+        {
+           while (true)
+           {
+              string message = client.Recieve();
+              Respond(message);
+            }
+        }
+
+        private void AddUsersToDictionary(User client)
         {
             userList = new Dictionary<User, int>();
             userList.Add(client, userNumber);
             userNumber++;
+            Console.WriteLine("added user");
         }
 
         private void Respond(string body)
