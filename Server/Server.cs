@@ -15,11 +15,12 @@ namespace Server
         private int userNumber = 1;
         User client;
         TcpListener server;
-        Dictionary<User, int> userList;
+        Dictionary<int, User> userList;
         FileLogger logger;
 
         public Server()
         {
+            userList = new Dictionary<int, User>();
             server = new TcpListener(IPAddress.Parse("127.0.0.1"), 9999);
             server.Start();
         }
@@ -39,12 +40,12 @@ namespace Server
                 AddUsersToDictionary(client);
                 Task chat = Task.Run(() =>
                 {
-                    StartChatting(client);
+                    ServerResponds(client);
                 });
             } 
         }
 
-        private void StartChatting(User client)
+        private void ServerResponds(User client)
         {
            while (true)
            {
@@ -55,15 +56,18 @@ namespace Server
 
         private void AddUsersToDictionary(User client)
         {
-            userList = new Dictionary<User, int>();
-            userList.Add(client, userNumber);
+            
+            userList.Add(userNumber, client);
             userNumber++;
             Console.WriteLine("added user");
         }
 
         private void Respond(string body)
         {
-             client.Send(body);
+            for (int i = 1; i <= userList.Count; i++)
+            {
+                userList[i].Send(body);
+            }
         }
     }
 }
