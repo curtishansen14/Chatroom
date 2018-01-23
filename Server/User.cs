@@ -8,25 +8,25 @@ using System.IO;
 
 namespace Server
 {
-    public class User : IFileLogger
+    public class User 
     {
         NetworkStream stream;
         TcpClient client;
-        
+        ILogger logger;
 
         public string UserId;
-        public User(NetworkStream Stream, TcpClient Client)
+        public User(NetworkStream Stream, TcpClient Client, ILogger logger)
         {
             stream = Stream;
             client = Client;
             UserId = "495933b6-1762-47a1-b655-483510072e73";
+            this.logger = logger;
         }
         public void Send(string Message)
         {
             byte[] message = Encoding.ASCII.GetBytes(Message);
             stream.Write(message, 0, message.Count());
             LogMessage(Message);
-            Console.WriteLine("Message logged!");
         }
         public string Recieve()
         {

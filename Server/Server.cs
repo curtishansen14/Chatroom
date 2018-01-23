@@ -12,10 +12,11 @@ namespace Server
 {
      class Server
     {
-        public static User client;
-        private int userNumber;
+        private int userNumber = 1;
+        User client;
         TcpListener server;
         Dictionary<User, int> userList;
+        FileLogger logger;
 
         public Server()
         {
@@ -25,23 +26,39 @@ namespace Server
         public void Run()
         {
             AcceptClient();
-            while (true)
-            {
-                string message = client.Recieve();
-                Respond(message);
-
-            }
+        
         }
         private void AcceptClient()
         {
-                userNumber = 1;
+            while (true)
+            {
                 TcpClient clientSocket = default(TcpClient);
                 clientSocket = server.AcceptTcpClient();
                 NetworkStream stream = clientSocket.GetStream();
-                client = new User(stream, clientSocket);
-                userList = new Dictionary<User, int>();
-                userList.Add(client, userNumber);
-                userNumber++;
+                client = new User(stream, clientSocket, logger);
+                AddUsersToDictionary(client);
+                Task chat = Task.Run(() =>
+                {
+                    StartChatting(client);
+                });
+            } 
+        }
+
+        private void StartChatting(User client)
+        {
+           while (true)
+           {
+              string message = client.Recieve();
+              Respond(message);
+            }
+        }
+
+        private void AddUsersToDictionary(User client)
+        {
+            userList = new Dictionary<User, int>();
+            userList.Add(client, userNumber);
+            userNumber++;
+            Console.WriteLine("added user");
         }
 
         private void Respond(string body)

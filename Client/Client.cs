@@ -26,8 +26,7 @@ namespace Client
             clientSocket = new TcpClient();
             clientSocket.Connect(IPAddress.Parse(IP), port);
             stream = clientSocket.GetStream();
-            GetUserName();
-            Console.WriteLine(UserName + " is Connected");
+            userName = GetUserName();
         }
 
         public string UserName
@@ -40,6 +39,7 @@ namespace Client
        
         public void Send()
         {
+            Console.WriteLine(userName + "-");
             string messageString = UI.GetInput();
             byte[] message = Encoding.ASCII.GetBytes(messageString);
             stream.Write(message, 0, message.Count());

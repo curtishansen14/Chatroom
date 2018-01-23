@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="User.cs" />
-    <Compile Include="IFileLogger.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
