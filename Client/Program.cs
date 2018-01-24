@@ -14,18 +14,20 @@ namespace Client
 
             Parallel.Invoke(() =>
             {
-                while (true)
+                while (client.Connection == true)
                 {
                     client.Send();
                 }
+                Console.WriteLine("Lost connection");
                
             },
            () =>
            {
-               while (true)
+               while (client.Connection == true)
                {
                    client.Recieve();
                }
+               Console.WriteLine("Lost connection");
            });
         }
     }

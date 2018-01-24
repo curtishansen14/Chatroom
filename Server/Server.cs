@@ -49,10 +49,20 @@ namespace Server
 
         private void ServerResponds(User user)
         {
-           while (true)
-           {
-              string message = user.Recieve();
-              Respond(message);
+            try
+            {
+                while (true)
+                {
+                    string message = user.Recieve();
+                    Respond(message);
+                }
+            }
+            catch (Exception)
+            {
+                logger = new FileLogger();
+                logger.LogMessage("User left chatroom");
+                AcceptClient();
+
             }
         }
 
@@ -63,6 +73,7 @@ namespace Server
             userNumber++;
             Console.WriteLine("added user");
         }
+
 
         private void Respond(string body)
         {
