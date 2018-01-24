@@ -39,8 +39,8 @@ namespace Client
        
         public void Send()
         {
-            Console.WriteLine(userName + "-");
-            string messageString = UI.GetInput();
+          
+            string messageString = userName + ": " +  UI.GetInput();
             byte[] message = Encoding.ASCII.GetBytes(messageString);
             stream.Write(message, 0, message.Count());
         }

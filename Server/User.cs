@@ -13,8 +13,9 @@ namespace Server
         NetworkStream stream;
         TcpClient client;
         FileLogger logger;
-
         public string UserId;
+
+
         public User(NetworkStream Stream, TcpClient Client, FileLogger logger)
         {
             stream = Stream;
