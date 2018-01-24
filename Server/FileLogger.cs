@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Server
 {
-    public interface FileLogger : ILogger
+    public class FileLogger : ILogger
     {
-
+        public void LogMessage(string message)
+        {
+            StreamWriter logFile = new StreamWriter("ChatRoomLog.txt", append: true);
+            logFile.WriteLine(message);
+            logFile.Close();
+        }
     }
 }

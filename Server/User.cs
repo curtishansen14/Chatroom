@@ -8,14 +8,14 @@ using System.IO;
 
 namespace Server
 {
-    public class User 
+    public class User : FileLogger
     {
         NetworkStream stream;
         TcpClient client;
-        ILogger logger;
+        FileLogger logger;
 
         public string UserId;
-        public User(NetworkStream Stream, TcpClient Client, ILogger logger)
+        public User(NetworkStream Stream, TcpClient Client, FileLogger logger)
         {
             stream = Stream;
             client = Client;
@@ -26,7 +26,8 @@ namespace Server
         {
             byte[] message = Encoding.ASCII.GetBytes(Message);
             stream.Write(message, 0, message.Count());
-            LogMessage(Message);
+            logger = new FileLogger();
+            logger.LogMessage(Message);
         }
         public string Recieve()
         {
@@ -36,13 +37,5 @@ namespace Server
             Console.WriteLine(recievedMessageString);
             return recievedMessageString;
         }
-
-        public void LogMessage(string message)
-        {
-            StreamWriter logFile = new StreamWriter("ChatRoomLog.txt", append: true);
-            logFile.WriteLine(message);
-            logFile.Close();
-        }
-
     }
 }
