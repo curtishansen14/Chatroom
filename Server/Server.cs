@@ -14,7 +14,7 @@ namespace Server
      class Server
     {
         private int userNumber = 1;
-        User client;
+        User user;
         TcpListener server;
         Dictionary<int, User> userList;
         FileLogger logger;
@@ -38,28 +38,28 @@ namespace Server
                 TcpClient clientSocket = default(TcpClient);
                 clientSocket = server.AcceptTcpClient();
                 NetworkStream stream = clientSocket.GetStream();
-                client = new User(stream, clientSocket, logger);
-                AddUsersToDictionary(client);
+                user = new User(stream, clientSocket, logger);
+                AddUsersToDictionary(user);
                 Task chat = Task.Run(() =>
                 {
-                    ServerResponds(client);
+                    ServerResponds(user);
                 });
             } 
         }
 
-        private void ServerResponds(User client)
+        private void ServerResponds(User user)
         {
            while (true)
            {
-              string message = client.Recieve();
+              string message = user.Recieve();
               Respond(message);
             }
         }
 
-        private void AddUsersToDictionary(User client)
+        private void AddUsersToDictionary(User user)
         {
             
-            userList.Add(userNumber, client);
+            userList.Add(userNumber, user);
             userNumber++;
             Console.WriteLine("added user");
         }
