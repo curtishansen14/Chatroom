@@ -32,9 +32,23 @@ namespace Server
         {
             byte[] recievedMessage = new byte[256];
             stream.Read(recievedMessage, 0, recievedMessage.Length);
-            string recievedMessageString = Encoding.ASCII.GetString(recievedMessage);
+            string recievedMessageString = Encoding.ASCII.GetString(TrimByte(recievedMessage));
             Console.WriteLine(recievedMessageString);
             return recievedMessageString;
+        }
+
+
+        public byte[] TrimByte(byte[] recievedMessage)
+        {
+            int i = recievedMessage.Length - 1;
+            while (recievedMessage[i] == 0)
+            {
+                --i;
+            }
+              
+            byte[] trimmedMessage = new byte[i + 1];
+            Array.Copy(recievedMessage, trimmedMessage, i + 1);
+            return trimmedMessage;
         }
     }
 }
