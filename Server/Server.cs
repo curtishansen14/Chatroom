@@ -23,7 +23,7 @@ namespace Server
         public Server()
         {
             userList = new Dictionary<int, User>();
-            server = new TcpListener(IPAddress.Parse("127.0.0.1"), 9999);
+            server = new TcpListener(IPAddress.Parse("192.168.0.135"), 9999);
             server.Start();
         }
         public void Run()
