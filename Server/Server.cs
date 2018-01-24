@@ -18,6 +18,7 @@ namespace Server
         TcpListener server;
         Dictionary<int, User> userList;
         FileLogger logger;
+        string userName;
 
 
         public Server()
@@ -49,6 +50,9 @@ namespace Server
 
         private void ServerResponds(User user)
         {
+            userName = user.Recieve();
+            Respond(userName + " has entered the chatroom.");
+          
             try
             {
                 while (true)
@@ -60,7 +64,7 @@ namespace Server
             catch (Exception)
             {
                 logger = new FileLogger();
-                logger.LogMessage("User left chatroom");
+                logger.LogMessage(userName + " has left the chatroom");
                 AcceptClient();
 
             }

@@ -38,7 +38,14 @@ namespace Client
                 return userName;
             }
         }
-       
+
+        public void SendUserNameToServer()
+        {
+
+            string messageString = userName;
+            byte[] message = Encoding.ASCII.GetBytes(messageString);
+            stream.Write(message, 0, message.Count());
+        }
         public void Send()
         {
           
@@ -46,6 +53,7 @@ namespace Client
             byte[] message = Encoding.ASCII.GetBytes(messageString);
             stream.Write(message, 0, message.Count());
         }
+
         public void Recieve()
         {
             byte[] recievedMessage = new byte[256];
