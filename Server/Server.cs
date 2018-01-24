@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-     class Server
+     public class Server
     {
         private int userNumber = 1;
         User user;
@@ -81,6 +81,8 @@ namespace Server
             {
                 userList[i].Send(body);
             }
+            logger = new FileLogger();
+            logger.LogMessage(body);
         }
     }
 }

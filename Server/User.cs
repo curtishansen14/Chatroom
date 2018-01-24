@@ -27,8 +27,6 @@ namespace Server
         {
             byte[] message = Encoding.ASCII.GetBytes(Message);
             stream.Write(message, 0, message.Count());
-            logger = new FileLogger();
-            logger.LogMessage(Message);
         }
         public string Recieve()
         {
