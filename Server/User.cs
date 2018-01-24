@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Server
 {
-    public class User : FileLogger
+    public class User 
     {
         NetworkStream stream;
         TcpClient client;
