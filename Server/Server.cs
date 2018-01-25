@@ -75,7 +75,6 @@ namespace Server
             
             userList.Add(userNumber, user);
             userNumber++;
-            Console.WriteLine("added user");
         }
 
 

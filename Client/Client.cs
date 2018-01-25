@@ -58,7 +58,7 @@ namespace Client
         {
             byte[] recievedMessage = new byte[256];
             stream.Read(recievedMessage, 0, recievedMessage.Length);
-            UI.DisplayMessage(Encoding.ASCII.GetString(recievedMessage));
+            UI.DisplayMessage(Encoding.ASCII.GetString(TrimByte(recievedMessage)));
         }
 
         private bool isConnected()
@@ -70,6 +70,19 @@ namespace Client
         public bool Connection
         {
             get { return connection; }
+        }
+
+        public byte[] TrimByte(byte[] recievedMessage)
+        {
+            int i = recievedMessage.Length - 1;
+            while (recievedMessage[i] == 0)
+            {
+                --i;
+            }
+
+            byte[] trimmedMessage = new byte[i + 1];
+            Array.Copy(recievedMessage, trimmedMessage, i + 1);
+            return trimmedMessage;
         }
     }
 }
