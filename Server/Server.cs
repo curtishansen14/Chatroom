@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-     public class Server
+     public class Server : INotifier
     {
         private int userNumber = 1;
         User user;
@@ -30,7 +30,6 @@ namespace Server
         public void Run()
         {
             AcceptClient();
-        
         }
         private void AcceptClient()
         {
@@ -51,14 +50,14 @@ namespace Server
         private void ServerResponds(User user)
         {
             userName = user.Recieve();
-            Respond(userName + " has entered the chatroom.");
+            Notify(userName + " has entered the chatroom.");
           
             try
             {
                 while (true)
                 {
                     string message = user.Recieve();
-                    Respond(message);
+                    Notify(message);
                 }
             }
             catch (Exception)
@@ -66,26 +65,24 @@ namespace Server
                 logger = new FileLogger();
                 logger.LogMessage(userName + " has left the chatroom");
                 AcceptClient();
-
             }
         }
 
         private void AddUsersToDictionary(User user)
-        {
-            
+        {    
             userList.Add(userNumber, user);
             userNumber++;
         }
 
-
-        private void Respond(string body)
+        public void Notify(string message)
         {
             for (int i = 1; i <= userList.Count; i++)
             {
-                userList[i].Send(body);
+                userList[i].Send(message);
             }
+
             logger = new FileLogger();
-            logger.LogMessage(body);
+            logger.LogMessage(message);
         }
     }
 }
